@@ -1,7 +1,10 @@
 #include<stdio.h> //printf
+#include <stdlib.h>
 #include<string.h>    //strlen
+#include <unistd.h>
 #include<sys/socket.h>    //socket
 #include<arpa/inet.h> //inet_addr
+#include <netinet/in.h>
  
 int main(int argc , char *argv[])
 {
@@ -17,9 +20,9 @@ int main(int argc , char *argv[])
     }
 	puts("Socket created");
 
-	server.sin_addr.s_addr = inet_addr("172.18.159.147"); //100.35.37.229
+	server.sin_addr.s_addr = inet_addr("192.168.1.70"); //100.35.37.229
 	server.sin_family = AF_INET;
-	server.sin_port = htons(2226);
+	server.sin_port = htons(1234);
  
     	//Connect to remote server
 
@@ -40,11 +43,7 @@ int main(int argc , char *argv[])
 
 		int i;
 
-		printf("%s\n",message);
-
 		strcpy(m,message);
-
-		printf("%s\n",m);
 
 		//Send some data
 		if( send(sock , m , strlen(m) , 0) < 0)
