@@ -90,29 +90,6 @@ void *communicate_with_server(void *ta)
 	}
 }
 
-// void *write_message(void *ta)
-// {
-// 	char buffer[2000];
-// 	struct thread_args targ = *(struct thread_args *)ta;
-//     int socket = targ.socket;
-//     int idx = targ.idx;
-// 	while(1)
-// 	{
-// 		// Send some data
-//         if(heads[idx] != NULL)
-//         {
-//             printf("%s\n", heads[idx]->string);
-//             if (send(socket, heads[idx]->string, strlen(heads[idx]->string), 0) < 0)
-//             {
-//                 puts("Send failed");
-//                 return;
-//             }
-//             printf("%s\n", heads[idx]->string);
-//             dequeue(idx);
-//         }
-// 	}
-// }
-
 int main(int argc, char *argv[])
 {
     for(int i=0; i<3; i++)
@@ -182,7 +159,7 @@ int main(int argc, char *argv[])
 
     puts("Connected successfully to server 3\n");
 
-    pthread_t read_t[3], write_t[3];
+    pthread_t read_t[3];
     int rc;
 
     struct thread_args ta[3];
@@ -224,59 +201,19 @@ int main(int argc, char *argv[])
         printf("Thread created in Client for server 3\n");
     }
 
-    // if (pthread_create(&write_t[0], NULL, write_message, (void *)&ta[0]) < 0)
-    // {
-    //     perror("could not create thread for server 1");
-    //     return 1;
-    // }
-    // else
-    // {
-    //     printf("Thread created in Client for server 1\n");
-    // }
-
-    // if (pthread_create(&write_t[1], NULL, write_message, (void *)&ta[1]) < 0)
-    // {
-    //     perror("could not create thread for server 2");
-    //     return 1;
-    // }
-    // else
-    // {
-    //     printf("Thread created in Client for server 2\n");
-    // }
-
-    // if (pthread_create(&write_t[2], NULL, write_message, (void *)&ta[2]) < 0)
-    // {
-    //     perror("could not create thread for server 3");
-    //     return 1;
-    // }
-    // else
-    // {
-    //     printf("Thread created in Client for server 3\n");
-    // }
-
-    // keep communicating with server
-    // while (1)
-    // {
-    //     printf("Enter message :");
-    //     scanf("%s", message);
-
-    //     int idx = load_balancer();
-    //     enqueue(message, idx);
-    // }
-
-    for(int i=0; i < 9; i++)
+    keep communicating with server
+    while (1)
     {
+        printf("Enter message :");
+        scanf("%s", message);
+
         int idx = load_balancer();
-        enqueue("hello", idx);
+        enqueue(message, idx);
     }
 
     rc = pthread_join(read_t[0], NULL);
     rc = pthread_join(read_t[1], NULL);
     rc = pthread_join(read_t[2], NULL);
-
-    rc = pthread_join(write_t[0], NULL);
-    rc = pthread_join(write_t[1], NULL);
-    rc = pthread_join(write_t[2], NULL);
 
     printf("I am before close!");
     close(sockets[0]);
