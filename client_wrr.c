@@ -173,7 +173,7 @@ int main(int argc, char *argv[])
 
     puts("Connected successfully to server 3\n");
 
-    pthread_t read_t[3], write_t[3];
+    pthread_t read_t[3];
     int rc;
 
     struct thread_args ta[3];
@@ -228,10 +228,6 @@ int main(int argc, char *argv[])
     rc = pthread_join(read_t[0], NULL);
     rc = pthread_join(read_t[1], NULL);
     rc = pthread_join(read_t[2], NULL);
-
-    rc = pthread_join(write_t[0], NULL);
-    rc = pthread_join(write_t[1], NULL);
-    rc = pthread_join(write_t[2], NULL);
 
     printf("I am before close!");
     close(sockets[0]);
